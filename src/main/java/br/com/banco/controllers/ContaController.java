@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,15 +24,23 @@ public class ContaController {
 	private ContaService contaService;
 
 	@GetMapping(path = "/transferencias/{id}")
-	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuarioComFiltroDeTempo(
-			@PathVariable Long id,
+	public ResponseEntity<List<TransferenciaDTO>> retornarTodasAsTransferenciasDeUmUsuario(@PathVariable Long id,
 			@RequestParam(required = false) OffsetDateTime dataInicio,
 			@RequestParam(required = false) OffsetDateTime dataFim) {
+
+			List<TransferenciaDTO> dto = contaService.retornarTodasAsTransferenciasDeUmUsuario(id, dataInicio, dataFim);
+			return ResponseEntity.ok().body(dto);
 		
-		if (dataInicio == null && dataFim == null) {
-			return contaService.retornarTodasAsTransferenciasDeUmUsuario(id);
-		}
-		return contaService.retornarTodasAsTransferenciasDeUmUsuarioComFiltroDeData(id, dataInicio, dataFim);
+	}
+	
+	@GetMapping(path = "/transferencias/{id}/{nomeDoOperador}")
+	public ResponseEntity<List<TransferenciaDTO>> retornarTodasAsTransferenciasComNomeDeOperador(@PathVariable Long id, 
+			@PathVariable String nomeDoOperador,
+			@RequestParam(required = false) OffsetDateTime dataInicio,
+			@RequestParam(required = false) OffsetDateTime dataFim) {
+
+		List<TransferenciaDTO> dto = contaService.retornarTodasAsTransferenciasDeUmUsuarioComNomeDeOperador(id, dataInicio, dataFim, nomeDoOperador);
+		return ResponseEntity.ok().body(dto);
 	}
 
 }

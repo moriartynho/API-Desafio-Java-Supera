@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.banco.models.enums.TipoDeTransacao;
+
 @Entity
 @Table(name = "transferencia")
 public class Transferencia {
@@ -23,7 +25,7 @@ public class Transferencia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX")
 	@Column(name = "data_transferencia")
@@ -47,7 +49,7 @@ public class Transferencia {
 	public Transferencia() {
 	}
 
-	public Transferencia(Integer id, OffsetDateTime dataDeTransferencia, Double valor, TipoDeTransacao tipo,
+	public Transferencia(Long id, OffsetDateTime dataDeTransferencia, Double valor, TipoDeTransacao tipo,
 			String nomeOperadorTransacao, Conta conta) {
 		this.id = id;
 		this.dataDeTransferencia = dataDeTransferencia;
@@ -57,11 +59,11 @@ public class Transferencia {
 		this.conta = conta;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

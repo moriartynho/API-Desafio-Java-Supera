@@ -16,22 +16,39 @@ public class ContaService {
 	@Autowired
 	private TransferenciaRepository transferenciaRepository;
 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true)
-	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuario(Long id) {
-		List<Transferencia> transferencias = transferenciaRepository.findByContaId(id);
+	@org.springframework.transaction.annotation.Transactional
+	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuario(
+			Long id, 
+			OffsetDateTime dataInicio,
+			OffsetDateTime dataFim) {
+
+		if (dataInicio == null && dataFim == null) {
+			List<Transferencia> transferencias = transferenciaRepository.findByContaId(id);
+			List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
+			return dto;
+		}
+
+		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetween(id, dataInicio, dataFim);
 		List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
 		return dto;
+
 	}
 
-	@org.springframework.transaction.annotation.Transactional(readOnly = true)
-	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuarioComFiltroDeData(Long id,
-			OffsetDateTime dataInicio, OffsetDateTime dataFim) {
+	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuarioComNomeDeOperador(
+			Long id, 
+			OffsetDateTime dataFim,
+			OffsetDateTime dataInicio, 
+			String nomeDoOperador) {
 		
-		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetween(id, dataInicio,
-				dataFim);
+		if (dataInicio == null && dataFim == null) {
+			List<Transferencia> transferencias = transferenciaRepository.findByContaIdAndNomeOperadorTransacao(id, nomeDoOperador);
+			List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
+			return dto;
+		}
+
+		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetweenAndNomeOperadorTransacao(id, dataInicio, dataFim, nomeDoOperador);
 		List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
 		return dto;
-
 	}
 
 }

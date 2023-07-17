@@ -1,4 +1,4 @@
-package br.com.banco.models;
+package br.com.banco.models.enums;
 
 public enum TipoDeTransacao {
 

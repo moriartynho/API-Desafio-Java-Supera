@@ -6,8 +6,8 @@ import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
-import br.com.banco.models.TipoDeTransacao;
 import br.com.banco.models.Transferencia;
+import br.com.banco.models.enums.TipoDeTransacao;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TransferenciaDTO {
@@ -20,7 +20,7 @@ public class TransferenciaDTO {
 
 	private TipoDeTransacao tipo;
 
-	private String nomeDoOperadorDaTransacao;
+	private String nomeOperadorTransacao;
 	
 	public TransferenciaDTO(Transferencia transferencia) {
 		BeanUtils.copyProperties(transferencia, this);
@@ -58,12 +58,12 @@ public class TransferenciaDTO {
 		this.tipo = tipo;
 	}
 
-	public String getNomeDoOperadorDaTransacao() {
-		return nomeDoOperadorDaTransacao;
+	public String getNomeOperadorTransacao() {
+		return nomeOperadorTransacao;
 	}
 
-	public void setNomeDoOperadorDaTransacao(String nomeDoOperadorDaTransacao) {
-		this.nomeDoOperadorDaTransacao = nomeDoOperadorDaTransacao;
+	public void setNomeOperadorTransacao(String nomeDoOperadorDaTransacao) {
+		this.nomeOperadorTransacao = nomeDoOperadorDaTransacao;
 	}
 	
 	

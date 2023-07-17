@@ -1,6 +1,6 @@
 package br.com.banco.dto;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.BeanUtils;
 
@@ -14,7 +14,7 @@ public class TransferenciaDTO {
 	
 	private Long id;
 
-	private OffsetDateTime dataDeTransferencia;
+	private LocalDateTime dataDeTransferencia;
 
 	private Double valor;
 
@@ -34,11 +34,11 @@ public class TransferenciaDTO {
 		this.id = id;
 	}
 
-	public OffsetDateTime getDataDeTransferencia() {
+	public LocalDateTime getDataDeTransferencia() {
 		return dataDeTransferencia;
 	}
 
-	public void setDataDeTransferencia(OffsetDateTime dataDeTransferencia) {
+	public void setDataDeTransferencia(LocalDateTime dataDeTransferencia) {
 		this.dataDeTransferencia = dataDeTransferencia;
 	}
 

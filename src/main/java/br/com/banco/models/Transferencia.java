@@ -1,6 +1,7 @@
 package br.com.banco.models;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.banco.models.enums.TipoDeTransacao;
@@ -27,9 +29,9 @@ public class Transferencia {
 	@Column(name = "id")
 	private Long id;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ssXXX")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "data_transferencia")
-	private OffsetDateTime dataDeTransferencia;
+	private LocalDateTime dataDeTransferencia;
 
 	@Column(name = "valor")
 	private Double valor;
@@ -49,7 +51,7 @@ public class Transferencia {
 	public Transferencia() {
 	}
 
-	public Transferencia(Long id, OffsetDateTime dataDeTransferencia, Double valor, TipoDeTransacao tipo,
+	public Transferencia(Long id, LocalDateTime dataDeTransferencia, Double valor, TipoDeTransacao tipo,
 			String nomeOperadorTransacao, Conta conta) {
 		this.id = id;
 		this.dataDeTransferencia = dataDeTransferencia;
@@ -67,11 +69,11 @@ public class Transferencia {
 		this.id = id;
 	}
 
-	public OffsetDateTime getDataDeTransferencia() {
+	public LocalDateTime getDataDeTransferencia() {
 		return dataDeTransferencia;
 	}
 
-	public void setDataDeTransferencia(OffsetDateTime dataDeTransferencia) {
+	public void setDataDeTransferencia(LocalDateTime dataDeTransferencia) {
 		this.dataDeTransferencia = dataDeTransferencia;
 	}
 

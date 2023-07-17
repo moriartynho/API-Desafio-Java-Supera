@@ -1,5 +1,6 @@
 package br.com.banco.services;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -17,10 +18,8 @@ public class ContaService {
 	private TransferenciaRepository transferenciaRepository;
 
 	@org.springframework.transaction.annotation.Transactional
-	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuario(
-			Long id, 
-			OffsetDateTime dataInicio,
-			OffsetDateTime dataFim) {
+	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuario(Long id, String dataInicio,
+			String dataFim) {
 
 		if (dataInicio == null && dataFim == null) {
 			List<Transferencia> transferencias = transferenciaRepository.findByContaId(id);
@@ -28,25 +27,27 @@ public class ContaService {
 			return dto;
 		}
 
-		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetween(id, dataInicio, dataFim);
+		LocalDateTime dataInicioFormatada = LocalDateTime.parse(dataInicio + "T00:00:00");
+		LocalDateTime dataFimFormatada = LocalDateTime.parse(dataFim + "T00:00:00");
+
+		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetween(id, dataInicioFormatada, dataFimFormatada);
 		List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
 		return dto;
 
 	}
 
-	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuarioComNomeDeOperador(
-			Long id, 
-			OffsetDateTime dataFim,
-			OffsetDateTime dataInicio, 
-			String nomeDoOperador) {
-		
+	public List<TransferenciaDTO> retornarTodasAsTransferenciasDeUmUsuarioComNomeDeOperador(Long id,
+			OffsetDateTime dataFim, OffsetDateTime dataInicio, String nomeDoOperador) {
+
 		if (dataInicio == null && dataFim == null) {
-			List<Transferencia> transferencias = transferenciaRepository.findByContaIdAndNomeOperadorTransacao(id, nomeDoOperador);
+			List<Transferencia> transferencias = transferenciaRepository.findByContaIdAndNomeOperadorTransacao(id,
+					nomeDoOperador);
 			List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
 			return dto;
 		}
 
-		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetweenAndNomeOperadorTransacao(id, dataInicio, dataFim, nomeDoOperador);
+		List<Transferencia> transferencias = transferenciaRepository.findByContaIdBetweenAndNomeOperadorTransacao(id,
+				dataInicio, dataFim, nomeDoOperador);
 		List<TransferenciaDTO> dto = transferencias.stream().map(x -> new TransferenciaDTO(x)).toList();
 		return dto;
 	}

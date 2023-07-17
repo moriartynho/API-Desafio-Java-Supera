@@ -1,5 +1,6 @@
 package br.com.banco.repositories;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Lo
 	List<Transferencia> findByContaId(Long id);
 
 	@Query("SELECT t FROM Transferencia t WHERE t.conta.id = :id AND t.dataDeTransferencia BETWEEN :dataInicio AND :dataFim")
-	List<Transferencia> findByContaIdBetween(Long id, OffsetDateTime dataInicio, OffsetDateTime dataFim);
+	List<Transferencia> findByContaIdBetween(Long id, LocalDateTime dataInicio, LocalDateTime dataFim);
 
 	List<Transferencia> findByContaIdAndNomeOperadorTransacao(Long id, String nomeDoOperador);
 	

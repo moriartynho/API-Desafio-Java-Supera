@@ -63,5 +63,9 @@ public class Conta {
 	public void setTransferencia(List<Transferencia> transferencia) {
 		this.transferencia = transferencia;
 	}
+	
+	public Double getSaldoTotal() {
+		return this.transferencia.stream().mapToDouble(v -> v.getValor()).sum();
+	}
 
 }

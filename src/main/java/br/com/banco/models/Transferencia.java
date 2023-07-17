@@ -1,6 +1,5 @@
 package br.com.banco.models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -33,7 +32,7 @@ public class Transferencia {
 	@Column(name = "data_transferencia")
 	private LocalDateTime dataDeTransferencia;
 
-	@Column(name = "valor")
+	@Column(name = "valor", precision = 20, scale = 2)
 	private Double valor;
 
 	@Enumerated(EnumType.STRING)
